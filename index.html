@@ -1,160 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yu-Gi-Oh | Jo-ken-po Edition</title>
-  <link rel="shortcut icon" href="./src/assets/favicon/Favicon.ico" type="image/x-icon" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./src/styles/reset.css" />
-  <link rel="stylesheet" href="./src/styles/buttons.css" />
-  <link rel="stylesheet" href="./src/styles/containers_and_frames.css" />
-  <link rel="stylesheet" href="./src/styles/main.css" />
-</head>
-<body>
-  <video class="bg-video" src="./src/assets/video/yugi.mp4" autoplay muted loop playsinline></video>
-  <div class="bg-shade"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mundo Invertido | Semana Front-end</title>
 
-  <main class="duel framed-golden-2">
-    <h1>Yu-Gi-Oh! <span>Jo-ken-po</span></h1>
-
-    <section class="settings framed-grey">
-      <div class="group"><span>Dificuldade</span>
-        <button class="chip" data-diff="easy">Fácil</button>
-        <button class="chip" data-diff="normal">Normal</button>
-        <button class="chip" data-diff="hard">Difícil</button>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Rubik+Glitch&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body class="light-theme" aria-label="O site está utilizando o tema light">
+    <div id="spores" aria-hidden="true"></div>
+    <div id="flash" aria-hidden="true"></div>
+    <button id="sound-toggle" type="button" aria-label="Ligar ou desligar a música" aria-pressed="false">♪</button>
+    <header aria-label="Cabeçalho da página.">
+      <audio id="music" loop>
+        <source src="assets/musics/normal-world.mpeg" aria-details="Audio do site" />
+      </audio>
+      <div class="header-content">
+        <img class="invert-element" src="assets/images/banner/logo.svg" alt="Imagem principal Mundo Invertido. Semana Frontend DIO." />
+        <p class="invert-element">
+          Uma jornada para quem não tem medo do desconhecido. O caminho para o
+          Mundo invertido é incerto, repleto de obstáculos e perigos. Porém, a
+          recompensa é grande: salvar Hawkings e o mundo todo das garras de
+          Vecna. Você está preparado? Então clique no botão abaixo para entrar
+          no Mundo Invertido!
+        </p>
+        <button id="switch-theme-button">Inverter Mundos</button>
       </div>
-      <div class="group"><span>Opções</span>
-        <button class="chip" id="opt-timer">Tempo: ON</button>
-        <button class="chip" id="opt-sfx">Efeitos: ON</button>
-        <label class="chip vol">Vol <input type="range" id="opt-vol" min="0" max="100" value="40" /></label>
-      </div>
-      <div class="group"><span>Modo</span>
-        <button class="chip" data-series="1">Duelo único</button>
-        <button class="chip" data-series="3">Melhor de 3</button>
-      </div>
-      <p class="rules" id="diff-info"></p>
-    </section>
 
-    <section class="hud">
-      <div>Rodada <b id="hud-round">1</b></div>
-      <div class="timer"><div class="bar"><i id="timer-bar"></i></div><b id="timer-num">--</b></div>
-      <div id="hud-series-box" hidden>Série <b id="hud-series">0 x 0</b></div>
-      <div>Duelo <b id="hud-elapsed">00:00</b></div>
-    </section>
+      <div id="top-characters" class="world-characters"></div>
+    </header>
 
-    <section class="lp-row">
-      <div class="lp" id="lp-player">
-        <p>VOCÊ <b id="lp-player-num">5000</b></p>
-        <div class="bar"><i id="lp-player-bar"></i></div>
-      </div>
-      <div class="lp lp-right" id="lp-cpu">
-        <p>OPONENTE <b id="lp-cpu-num">5000</b></p>
-        <div class="bar"><i id="lp-cpu-bar"></i></div>
-      </div>
-    </section>
+    <main>
+      <div id="bottom-characters" class="world-characters"></div>
 
-    <section class="field">
-      <div class="slot">
-        <p>Sua carta</p>
-        <div class="card" id="card-player"><img src="./src/assets/icons/card-back.png" alt="" /></div>
-      </div>
-      <div class="vs" id="result">
-        <strong id="result-text">ESCOLHA UMA CARTA</strong>
-        <small id="result-sub">Atalhos: 1, 2 ou 3</small>
-      </div>
-      <div class="slot">
-        <p>Oponente</p>
-        <div class="card" id="card-cpu"><img src="./src/assets/icons/card-back.png" alt="" /></div>
-      </div>
-    </section>
+      <section id="section-inverted-world" class="container">
+        <div class="section-texts">
+          <h1>O Mundo Invertido</h1>
+          <p>
+            O Mundo Invertido parece uma cópia do nosso mundo, mas com criaturas
+            horrendas, tempestades assustadoras, muita escuridão e entidades
+            malignas. Um reino controlado por Vecna, que tem planos de trazer
+            tudo isso ao nosso mundo.
+          </p>
+        </div>
 
-    <section class="hand" id="hand"></section>
+        <img
+          class="invert-element"
+          src="assets/images/content/inverted-world.png"
+          alt="Image ilustrativa do Mundo Invertido"
+        />
+      </section>
 
-    <section class="items" id="items">
-      <button class="chip" data-item="shield">[Q] Escudo</button>
-      <button class="chip" data-item="double">[W] Dano x2</button>
-      <button class="chip" data-item="eye">[E] Olho do Milênio</button>
-    </section>
+      <section id="section-stranger-things-trailer" class="container">
+        <div class="video-frame" aria-hidden="true">
+          <iframe
+            width="460"
+            height="215"
+            src="https://www.youtube.com/embed/SJ9EFhQ3ANQ?controls=0"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="section-texts">
+          <h2>Stranger Things Vol. 4</h2>
+          <p>
+            Mais experientes, os heróis de Stranger Things também precisam
+            enfrentar desafios maiores do que nunca e fazer decisões que vão
+            mudar suas vidas para sempre. Confira ao lado o trailer da quarta
+            temporada.
+          </p>
+        </div>
+      </section>
 
-    <section class="log framed-grey">
-      <p id="log">O duelo começou. Que o coração das cartas esteja com você!</p>
-    </section>
+      <section id="section-stranger-things-gallery">
+        <div class="container section-text">
+          <h2>A segunda série mais assistida da Netflix</h2>
+          <ul class="gallery-container">
+            <li class="gallery-image invert-element">
+              <img src="assets/images/content/serie-image-01.png" alt="Imagem de Vecna" />
+            </li>
+            <li class="gallery-image invert-element">
+              <img src="assets/images/content/serie-image-02.png" alt="Imagem ilustrativa dos amigos de Eleven" />
+            </li>
+            <li class="gallery-image invert-element">
+              <img src="assets/images/content/serie-image-03.png" alt="Imagem Eleven assustada" />
+            </li>
+          </ul>
+        </div>
+      </section>
 
-    <section class="stats framed-grey">
-      <span>Rodadas V/D/E: <b id="st-rounds">0/0/0</b></span>
-      <span>Duelos V/D: <b id="st-duels">0/0</b></span>
-      <span>Melhor combo: <b id="st-combo">0</b></span>
-      <button class="chip" id="btn-clear">Zerar</button>
-      <p class="rank" id="rank"></p>
-    </section>
+      <section id="section-form" class="container">
+        <h2>O Clube Dungeons & Dragons</h2>
+        <p>
+          Para deter Vecna, os heróis de Stranger Things também precisam de
+          você. O Clube de D&D mais famoso de Hawkings está com vagas abertas
+          para sua próxima aventura. Se você é destemido, gosta de desafios e
+          não tem medo de rodar o D20, chegou a hora de se inscrever para fazer
+          parte da nova campanha.
+        </p>
 
-    <section class="actions">
-      <button class="rpgui-button golden" id="btn-reset"><p>Novo duelo</p></button>
-      <button class="rpgui-button" id="btn-pause">Pausar</button>
-      <button class="rpgui-button" id="btn-help">Instruções</button>
-      <button class="rpgui-button" id="btn-music">Música: OFF</button>
-    </section>
-  </main>
+        <div class="form-content">
+          <h3>Entre para o clube de D&D e tenha experiências de <span>outro mundo</span></h3>
 
-  <div class="modal" id="help" hidden>
-    <div class="modal-box framed-golden-2" role="dialog" aria-labelledby="help-title">
-      <h2 id="help-title">Como jogar</h2>
+          <div class="form-container">
+            <form>
+              <label for="txtName">Nome Completo</label>
+              <input type="text" name="name" id="txtName" autocomplete="name" required>
+          
+              <label for="txtEmail">E-mail</label>
+              <input type="email" name="email" id="txtEmail" autocomplete="email" required>
+          
+              <label for="txtLevel">Level (1 a 20)</label>
+              <div class="level-row">
+                <input type="text" name="level" id="txtLevel" inputmode="numeric" placeholder="ex.: 5" required>
+                <button type="button" id="btnRoll" class="secondary">🎲 Rolar D20</button>
+              </div>
+          
+              <label for="txtCharacter">Personagem</label>
+              <textarea name="character" cols="30" rows="6" id="txtCharacter" placeholder="Ex.: Elfa ladina que fugiu do Laboratório de Hawkins" required></textarea>
+            
+              <button type="button" id="btnSubscribe">Me inscrever</button>
+              <p id="formMsg" role="status" aria-live="polite"></p>
+            </form>
+            <div id="roster" class="roster" hidden>
+              <h4>A party de Hawkins: <b id="rosterCount">0</b></h4>
+              <ul id="rosterList"></ul>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+    </main>
 
-      <h3>Objetivo</h3>
-      <p>Zere os Life Points (LP) do oponente antes que ele zere os seus. A cada rodada você escolhe uma carta e o oponente escolhe outra ao mesmo tempo.</p>
-
-      <h3>Regras das cartas</h3>
-      <div class="rule-cards">
-        <div><img src="./src/assets/icons/dragon.png" alt="" /><p>Dragão Branco<br />vence o Exodia</p></div>
-        <div><img src="./src/assets/icons/exodia.png" alt="" /><p>Exodia<br />vence o Mago</p></div>
-        <div><img src="./src/assets/icons/magician.png" alt="" /><p>Mago Negro<br />vence o Dragão</p></div>
-      </div>
-      <p>Cartas iguais empatam e ninguém perde LP (o combo de ambos zera).</p>
-
-      <h3>Dano e combo</h3>
-      <p>Cada vitória causa 1000 de dano. Vitórias seguidas formam um combo: +500 de dano por vitória a mais, até o máximo de 3000. Vale para você e para o oponente. Empate ou derrota quebram o combo.</p>
-
-      <h3>Tempo</h3>
-      <p>Cada rodada tem um limite. Se acabar, você perde a rodada e sofre o ataque. A barra fica vermelha nos últimos 3 segundos. Dá para desligar o cronômetro em "Tempo: OFF". O relógio "Duelo" mostra o tempo total da partida.</p>
-
-      <h3>Dificuldades</h3>
-      <table>
-        <tr><th>Nível</th><th>LP</th><th>Tempo</th><th>Oponente</th></tr>
-        <tr><td>Fácil</td><td>6000</td><td>12s</td><td>às vezes joga a carta mais fraca</td></tr>
-        <tr><td>Normal</td><td>5000</td><td>8s</td><td>aleatório</td></tr>
-        <tr><td>Difícil</td><td>4000</td><td>5s</td><td>aprende qual carta você mais usa</td></tr>
-      </table>
-      <p>Trocar a dificuldade começa um novo duelo.</p>
-
-      <h3>Modos</h3>
-      <p><b>Duelo único:</b> uma partida, quem zerar o outro vence.<br /><b>Melhor de 3:</b> vence quem ganhar 2 duelos. O placar fica no topo e, entre os duelos, o botão vira "Próximo duelo".</p>
-
-      <h3>Poderes (1 uso de cada por duelo)</h3>
-      <p><b>Escudo:</b> a próxima derrota não causa dano.<br /><b>Dano x2:</b> a próxima vitória causa o dobro de dano.<br /><b>Olho do Milênio:</b> revela a carta que o oponente vai jogar. Use antes de escolher a sua.</p>
-
-      <h3>Ranking e estatísticas</h3>
-      <p>Os 5 duelos vencidos mais rápidos de cada dificuldade ficam no ranking. Também são guardados rodadas V/D/E, duelos ganhos/perdidos e melhor combo. Tudo fica salvo no navegador; "Zerar" apaga tudo.</p>
-
-      <h3>Comandos</h3>
-      <table>
-        <tr><th>Tecla</th><th>Ação</th></tr>
-        <tr><td>1 / 2 / 3</td><td>Jogar Dragão / Exodia / Mago</td></tr>
-        <tr><td>Q</td><td>Escudo</td></tr>
-        <tr><td>W</td><td>Dano x2</td></tr>
-        <tr><td>E</td><td>Olho do Milênio</td></tr>
-        <tr><td>P</td><td>Pausar / continuar</td></tr>
-        <tr><td>H ou ?</td><td>Abrir estas instruções</td></tr>
-        <tr><td>Esc</td><td>Fechar estas instruções</td></tr>
-      </table>
-      <p>Com o mouse, clique nas cartas, nos poderes e nos botões. Os botões "Música" e "Efeitos" e o controle de volume ficam no painel de opções.</p>
-
-      <div class="actions"><button class="rpgui-button golden" id="btn-help-close"><p>Entendi</p></button></div>
-    </div>
-  </div>
-
-  <audio id="bgm" src="./src/assets/audios/egyptian_duel.mp3" loop></audio>
-  <script src="./src/scripts/engine.js"></script>
-</body>
+    <footer>
+      <p>
+        Projeto construído para fins didáticos, com o objetivo de colocar em
+        prática os conhecimentos de HTML, CSS e JavaScript aprendidos na DIO._
+      </p>
+      <img src="assets/images/footer/logo.svg" alt="">
+    </footer>
+    
+    <script src="assets/js/main.js" defer></script>
+  </body>
 </html>
