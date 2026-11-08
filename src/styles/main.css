@@ -1,0 +1,107 @@
+:root { --gold: #f5c542; --red: #ff4d4d; --green: #5dff8a; }
+html, body { height: 100%; }
+body {
+  color: #fff; display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 16px; font-size: 12px;
+  cursor: url("../assets/cursor/yugicursor.png"), auto;
+}
+button, .hand-card { cursor: url("../assets/cursor/yamiyugicursorGLOW.png"), pointer; }
+
+.bg-video { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.bg-shade { position: fixed; inset: 0; background: radial-gradient(#0008, #000d); z-index: -1; }
+
+.duel { width: 100%; max-width: 860px; text-align: center; }
+h1 { font-size: 22px; color: var(--gold); text-shadow: 3px 3px #000; margin-bottom: 18px; line-height: 1.4; }
+h1 span { color: #fff; display: block; font-size: 12px; margin-top: 6px; }
+
+/* Life Points */
+.lp-row { display: flex; gap: 16px; margin-bottom: 18px; }
+.lp { flex: 1; text-align: left; }
+.lp-right { text-align: right; }
+.lp p { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 10px; }
+.lp b { color: var(--gold); }
+.bar { height: 14px; background: #000a; border: 2px solid var(--gold); }
+.bar i { display: block; height: 100%; width: 100%; background: linear-gradient(#5dff8a, #1fa84a); transition: width .6s; }
+#lp-cpu-bar { background: linear-gradient(#ff7a7a, #b30000); margin-left: auto; }
+
+/* Campo */
+.field { display: flex; justify-content: space-around; align-items: center; gap: 8px; margin-bottom: 18px; }
+.slot p { font-size: 10px; margin-bottom: 8px; color: #ddd; }
+.card { width: 128px; height: 171px; perspective: 600px; }
+.card img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 10px #000); }
+.card.flip img { animation: flip .5s ease; }
+.card.shake { animation: shake .45s; }
+@keyframes flip { from { transform: rotateY(90deg) scale(.8); } to { transform: none; } }
+@keyframes shake { 20%,60% { transform: translateX(-8px); } 40%,80% { transform: translateX(8px); filter: brightness(2) sepia(1) hue-rotate(-30deg); } }
+
+.vs { flex: 1; min-width: 150px; }
+.vs strong { display: block; font-size: 14px; line-height: 1.5; text-shadow: 2px 2px #000; }
+.vs small { display: block; margin-top: 8px; font-size: 9px; color: var(--gold); }
+.win { color: var(--green); } .lose { color: var(--red); } .draw { color: #ccc; }
+
+/* Mão */
+.hand { display: flex; justify-content: center; gap: 22px; margin-bottom: 18px; }
+.hand-card { background: none; position: relative; width: 104px; transition: transform .2s; }
+.hand-card img { width: 100%; border: 2px solid var(--gold); border-radius: 4px; display: block; }
+.hand-card span { position: absolute; top: -10px; left: -10px; background: var(--gold); color: #000; padding: 6px 7px; font-size: 10px; }
+.hand-card:hover { transform: translateY(-14px) scale(1.08); filter: drop-shadow(0 0 14px var(--gold)); }
+
+.log { margin-bottom: 18px; font-size: 10px; line-height: 1.7; min-height: 52px; display: flex; align-items: center; justify-content: center; }
+.actions { display: flex; justify-content: center; gap: 56px; }
+
+/* Vitória */
+body.victory .duel { animation: glow 1s infinite alternate; }
+@keyframes glow { to { filter: drop-shadow(0 0 24px var(--gold)); } }
+
+@media (max-width: 600px) {
+  .field { flex-direction: column; } .hand { gap: 10px; } .hand-card { width: 80px; }
+  .actions { flex-direction: column; align-items: center; gap: 12px; }
+}
+
+/* ===== Configurações, HUD e estatísticas ===== */
+.settings, .stats { margin-bottom: 16px; font-size: 9px; }
+.group { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
+.group > span { color: var(--gold); min-width: 90px; text-align: left; }
+.chip { background: #000a; color: #fff; border: 2px solid #777; padding: 8px 10px; font-size: 9px; }
+.chip:hover { border-color: var(--gold); }
+.chip.on { background: var(--gold); color: #000; border-color: var(--gold); }
+.chip.vol { display: inline-flex; align-items: center; gap: 6px; }
+.chip.vol input { width: 80px; accent-color: var(--gold); cursor: inherit; }
+.rules { color: #ccc; line-height: 1.6; font-size: 8px; }
+
+.hud { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; font-size: 9px; }
+.hud b { color: var(--gold); }
+.timer { flex: 1; display: flex; align-items: center; gap: 8px; }
+.timer .bar { flex: 1; height: 12px; }
+.timer .bar i { background: linear-gradient(#ffe27a, #d79b00); transition: width .1s linear; }
+.timer .bar i.low { background: linear-gradient(#ff7a7a, #b30000); }
+
+.stats { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; line-height: 1.6; }
+.stats b { color: var(--gold); }
+
+body.paused .field, body.paused .hand { opacity: .35; filter: blur(2px); }
+@media (max-width: 600px) { .hud { flex-wrap: wrap; } .timer { order: 3; flex-basis: 100%; } }
+
+/* ===== Poderes, série e ranking ===== */
+.items { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.chip:disabled { opacity: .35; cursor: not-allowed; border-color: #444; }
+.card.peek img { opacity: .6; filter: drop-shadow(0 0 12px var(--gold)) saturate(1.4); }
+.rank { flex-basis: 100%; color: #ccc; font-size: 8px; line-height: 1.8; }
+
+/* ===== Menu de instruções ===== */
+.modal { position: fixed; inset: 0; z-index: 100; background: #000c; display: flex; justify-content: center; align-items: center; padding: 16px; }
+.modal[hidden] { display: none; }
+.modal-box { width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; text-align: left; font-size: 9px; line-height: 1.9; }
+.modal-box h2 { color: var(--gold); font-size: 16px; text-align: center; margin-bottom: 14px; text-shadow: 2px 2px #000; }
+.modal-box h3 { color: var(--gold); font-size: 10px; margin: 16px 0 6px; }
+.modal-box p { color: #eee; }
+.modal-box b { color: var(--gold); }
+.modal-box table { width: 100%; border-collapse: collapse; margin: 6px 0; }
+.modal-box th, .modal-box td { border: 1px solid #777; padding: 6px; font-size: 8px; line-height: 1.6; }
+.modal-box th { background: #000a; color: var(--gold); }
+.rule-cards { display: flex; justify-content: space-around; gap: 8px; margin: 8px 0; text-align: center; }
+.rule-cards img { width: 72px; border: 2px solid var(--gold); border-radius: 4px; }
+.rule-cards p { font-size: 8px; margin-top: 6px; }
+.modal-box .actions { margin-top: 18px; }
+.actions { flex-wrap: wrap; }
+@media (max-width: 600px) { .actions { gap: 12px; } }

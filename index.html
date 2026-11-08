@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yu-Gi-Oh | Jo-ken-po Edition</title>
+  <link rel="shortcut icon" href="./src/assets/favicon/Favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/styles/reset.css" />
+  <link rel="stylesheet" href="./src/styles/buttons.css" />
+  <link rel="stylesheet" href="./src/styles/containers_and_frames.css" />
+  <link rel="stylesheet" href="./src/styles/main.css" />
+</head>
+<body>
+  <video class="bg-video" src="./src/assets/video/yugi.mp4" autoplay muted loop playsinline></video>
+  <div class="bg-shade"></div>
+
+  <main class="duel framed-golden-2">
+    <h1>Yu-Gi-Oh! <span>Jo-ken-po</span></h1>
+
+    <section class="settings framed-grey">
+      <div class="group"><span>Dificuldade</span>
+        <button class="chip" data-diff="easy">Fácil</button>
+        <button class="chip" data-diff="normal">Normal</button>
+        <button class="chip" data-diff="hard">Difícil</button>
+      </div>
+      <div class="group"><span>Opções</span>
+        <button class="chip" id="opt-timer">Tempo: ON</button>
+        <button class="chip" id="opt-sfx">Efeitos: ON</button>
+        <label class="chip vol">Vol <input type="range" id="opt-vol" min="0" max="100" value="40" /></label>
+      </div>
+      <div class="group"><span>Modo</span>
+        <button class="chip" data-series="1">Duelo único</button>
+        <button class="chip" data-series="3">Melhor de 3</button>
+      </div>
+      <p class="rules" id="diff-info"></p>
+    </section>
+
+    <section class="hud">
+      <div>Rodada <b id="hud-round">1</b></div>
+      <div class="timer"><div class="bar"><i id="timer-bar"></i></div><b id="timer-num">--</b></div>
+      <div id="hud-series-box" hidden>Série <b id="hud-series">0 x 0</b></div>
+      <div>Duelo <b id="hud-elapsed">00:00</b></div>
+    </section>
+
+    <section class="lp-row">
+      <div class="lp" id="lp-player">
+        <p>VOCÊ <b id="lp-player-num">5000</b></p>
+        <div class="bar"><i id="lp-player-bar"></i></div>
+      </div>
+      <div class="lp lp-right" id="lp-cpu">
+        <p>OPONENTE <b id="lp-cpu-num">5000</b></p>
+        <div class="bar"><i id="lp-cpu-bar"></i></div>
+      </div>
+    </section>
+
+    <section class="field">
+      <div class="slot">
+        <p>Sua carta</p>
+        <div class="card" id="card-player"><img src="./src/assets/icons/card-back.png" alt="" /></div>
+      </div>
+      <div class="vs" id="result">
+        <strong id="result-text">ESCOLHA UMA CARTA</strong>
+        <small id="result-sub">Atalhos: 1, 2 ou 3</small>
+      </div>
+      <div class="slot">
+        <p>Oponente</p>
+        <div class="card" id="card-cpu"><img src="./src/assets/icons/card-back.png" alt="" /></div>
+      </div>
+    </section>
+
+    <section class="hand" id="hand"></section>
+
+    <section class="items" id="items">
+      <button class="chip" data-item="shield">[Q] Escudo</button>
+      <button class="chip" data-item="double">[W] Dano x2</button>
+      <button class="chip" data-item="eye">[E] Olho do Milênio</button>
+    </section>
+
+    <section class="log framed-grey">
+      <p id="log">O duelo começou. Que o coração das cartas esteja com você!</p>
+    </section>
+
+    <section class="stats framed-grey">
+      <span>Rodadas V/D/E: <b id="st-rounds">0/0/0</b></span>
+      <span>Duelos V/D: <b id="st-duels">0/0</b></span>
+      <span>Melhor combo: <b id="st-combo">0</b></span>
+      <button class="chip" id="btn-clear">Zerar</button>
+      <p class="rank" id="rank"></p>
+    </section>
+
+    <section class="actions">
+      <button class="rpgui-button golden" id="btn-reset"><p>Novo duelo</p></button>
+      <button class="rpgui-button" id="btn-pause">Pausar</button>
+      <button class="rpgui-button" id="btn-help">Instruções</button>
+      <button class="rpgui-button" id="btn-music">Música: OFF</button>
+    </section>
+  </main>
+
+  <div class="modal" id="help" hidden>
+    <div class="modal-box framed-golden-2" role="dialog" aria-labelledby="help-title">
+      <h2 id="help-title">Como jogar</h2>
+
+      <h3>Objetivo</h3>
+      <p>Zere os Life Points (LP) do oponente antes que ele zere os seus. A cada rodada você escolhe uma carta e o oponente escolhe outra ao mesmo tempo.</p>
+
+      <h3>Regras das cartas</h3>
+      <div class="rule-cards">
+        <div><img src="./src/assets/icons/dragon.png" alt="" /><p>Dragão Branco<br />vence o Exodia</p></div>
+        <div><img src="./src/assets/icons/exodia.png" alt="" /><p>Exodia<br />vence o Mago</p></div>
+        <div><img src="./src/assets/icons/magician.png" alt="" /><p>Mago Negro<br />vence o Dragão</p></div>
+      </div>
+      <p>Cartas iguais empatam e ninguém perde LP (o combo de ambos zera).</p>
+
+      <h3>Dano e combo</h3>
+      <p>Cada vitória causa 1000 de dano. Vitórias seguidas formam um combo: +500 de dano por vitória a mais, até o máximo de 3000. Vale para você e para o oponente. Empate ou derrota quebram o combo.</p>
+
+      <h3>Tempo</h3>
+      <p>Cada rodada tem um limite. Se acabar, você perde a rodada e sofre o ataque. A barra fica vermelha nos últimos 3 segundos. Dá para desligar o cronômetro em "Tempo: OFF". O relógio "Duelo" mostra o tempo total da partida.</p>
+
+      <h3>Dificuldades</h3>
+      <table>
+        <tr><th>Nível</th><th>LP</th><th>Tempo</th><th>Oponente</th></tr>
+        <tr><td>Fácil</td><td>6000</td><td>12s</td><td>às vezes joga a carta mais fraca</td></tr>
+        <tr><td>Normal</td><td>5000</td><td>8s</td><td>aleatório</td></tr>
+        <tr><td>Difícil</td><td>4000</td><td>5s</td><td>aprende qual carta você mais usa</td></tr>
+      </table>
+      <p>Trocar a dificuldade começa um novo duelo.</p>
+
+      <h3>Modos</h3>
+      <p><b>Duelo único:</b> uma partida, quem zerar o outro vence.<br /><b>Melhor de 3:</b> vence quem ganhar 2 duelos. O placar fica no topo e, entre os duelos, o botão vira "Próximo duelo".</p>
+
+      <h3>Poderes (1 uso de cada por duelo)</h3>
+      <p><b>Escudo:</b> a próxima derrota não causa dano.<br /><b>Dano x2:</b> a próxima vitória causa o dobro de dano.<br /><b>Olho do Milênio:</b> revela a carta que o oponente vai jogar. Use antes de escolher a sua.</p>
+
+      <h3>Ranking e estatísticas</h3>
+      <p>Os 5 duelos vencidos mais rápidos de cada dificuldade ficam no ranking. Também são guardados rodadas V/D/E, duelos ganhos/perdidos e melhor combo. Tudo fica salvo no navegador; "Zerar" apaga tudo.</p>
+
+      <h3>Comandos</h3>
+      <table>
+        <tr><th>Tecla</th><th>Ação</th></tr>
+        <tr><td>1 / 2 / 3</td><td>Jogar Dragão / Exodia / Mago</td></tr>
+        <tr><td>Q</td><td>Escudo</td></tr>
+        <tr><td>W</td><td>Dano x2</td></tr>
+        <tr><td>E</td><td>Olho do Milênio</td></tr>
+        <tr><td>P</td><td>Pausar / continuar</td></tr>
+        <tr><td>H ou ?</td><td>Abrir estas instruções</td></tr>
+        <tr><td>Esc</td><td>Fechar estas instruções</td></tr>
+      </table>
+      <p>Com o mouse, clique nas cartas, nos poderes e nos botões. Os botões "Música" e "Efeitos" e o controle de volume ficam no painel de opções.</p>
+
+      <div class="actions"><button class="rpgui-button golden" id="btn-help-close"><p>Entendi</p></button></div>
+    </div>
+  </div>
+
+  <audio id="bgm" src="./src/assets/audios/egyptian_duel.mp3" loop></audio>
+  <script src="./src/scripts/engine.js"></script>
+</body>
+</html>
