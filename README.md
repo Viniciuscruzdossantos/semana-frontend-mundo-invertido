@@ -145,7 +145,7 @@ assets/
 
 Olá! Eu sou o **Vinícius Cruz dos Santos** 👋
 
-Estudante de **Ciência da Computação** (UniDrummond Tatuapé), com formação técnica em **Desenvolvimento de Sistemas** (ETEC de Guaianases) e curso de Designer Gráfico. Meu objetivo é atuar na área de ciência da computação, e eu aprendo construindo projetos como este.
+
 
 - 💻 **Conhecimentos:** HTML, CSS, JavaScript, Python, Java, C++ e MySQL
 - 🎨 **Design:** Blender, Photoshop e Lightroom
@@ -164,4 +164,4 @@ Estudante de **Ciência da Computação** (UniDrummond Tatuapé), com formação
 
 ---
 
-<p align="center">Feito com 💙 e muito aprendizado na Semana Front-end da DIO.</p>
+<p align="center">Feito com 💙 muito aprendizado na Semana Front-end da DIO.</p
